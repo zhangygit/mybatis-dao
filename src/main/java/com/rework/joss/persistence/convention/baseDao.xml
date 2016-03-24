@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://project/doc/spring-framework-2.x/dist/spring-beans-2.0.dtd">
+<beans>
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+	</bean>
+
+	<bean id="sqlMapper" class="com.rework.joss.persistence.convention.SqlMapper" >
+		<constructor-arg ref="sqlSessionTemplate" />
+	</bean>
+</beans>

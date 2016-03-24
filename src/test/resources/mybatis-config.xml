@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!-- MyBatis 配置 -->
+    <settings>
+        <!--结果支持驼峰方式返回-->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <!--支持数据库自增-->
+        <setting name="useGeneratedKeys" value="true" />
+    </settings>
+    
+</configuration>
+

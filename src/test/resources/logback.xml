@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+<property name="LOG_FILE" value="D:\\log\\dal.log" />
+<property name="LOG_PATTERN" value="D:\\log\\pattern\\event.%d{yyyy-MM-dd}\L%d{dd}-%i.log" />
+<property name="ENCODE" value="UTF-8" />
+<property name="LOG_LEVEL" value="DEBUG"></property> 
+<!-- ConsoleAppender 把日志添加到控制台 -->
+    <appender name="DEBUGSTDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!--   Layout 负责把事件转换成字符串，格式化的日志信息的输出。 -->
+        <!-- 输出格式 时间 进程 输出级别 输出信息 换行符 -->
+         <target>System.out</target>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+             <onMatch>ACCEPT</onMatch>   
+      		<onMismatch>DENY</onMismatch>   
+        </filter>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern><![CDATA[
+			%d{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n
+            ]]></pattern>
+        </layout>
+    </appender>
+    <appender name="INFOSTDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!--   Layout 负责把事件转换成字符串，格式化的日志信息的输出。 -->
+        <!-- 输出格式 时间 进程 输出级别 输出信息 换行符 -->
+         <target>System.out</target>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+        	<level>INFO</level>
+        	 <onMatch>ACCEPT</onMatch>   
+      		<onMismatch>DENY</onMismatch>
+        </filter>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern><![CDATA[
+			%d{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n
+            ]]></pattern>
+        </layout>
+    </appender>
+<!-- 错误信息添加到控制台 -->
+    <appender name="STDERR" class="ch.qos.logback.core.ConsoleAppender">
+        <target>System.err</target>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>WARN</level>
+        </filter>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern><![CDATA[
+            %d{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n
+            ]]></pattern>
+        </layout>
+    </appender>
+    
+	<!-- 滚动记录文件，先将日志记录到指定文件，每天生成一个文件 30天周期归档  -->
+ 	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_FILE}</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_PATTERN}</fileNamePattern>
+			<maxHistory>30</maxHistory>
+			<TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+		    	<MaxFileSize>5MB</MaxFileSize>
+		    </TimeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
+		</encoder>
+	</appender>
+	
+	
+	
+    <logger name="org.apache">
+        <level value="INFO" />
+    </logger>
+
+    <logger name="org.springframework">
+        <level value="INFO" />
+    </logger>
+
+    <root>
+        <level value="${LOG_LEVEL}" />
+         <appender-ref ref="DEBUGSTDOUT" /> 
+         <appender-ref ref="INFOSTDOUT" />
+        <appender-ref ref="STDERR" />
+        <appender-ref ref="FILE" />
+    </root>
+</configuration>
